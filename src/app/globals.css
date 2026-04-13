@@ -1,0 +1,636 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    --color-background: #020617; /* slate-950 */
+    --color-surface: #020617;
+    --color-surface-muted: #020617;
+    --color-border-subtle: rgba(148, 163, 184, 0.25);
+    --color-accent: #22c55e; /* emerald-500 */
+    --color-accent-soft: rgba(34, 197, 94, 0.15);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.12), transparent 55%),
+    linear-gradient(to bottom, #020617, #020617);
+  @apply text-slate-100 antialiased;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+html[data-theme="light"] body {
+  background: #ffffff;
+  @apply text-slate-900;
+}
+
+/* Light theme typography overrides for better contrast */
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3 {
+  @apply text-slate-900;
+}
+
+html[data-theme="light"] .text-slate-50,
+html[data-theme="light"] .text-slate-100,
+html[data-theme="light"] .text-slate-200,
+html[data-theme="light"] .text-slate-300,
+html[data-theme="light"] .text-slate-400 {
+  @apply text-slate-900;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] li {
+  @apply text-slate-900;
+}
+
+main {
+  @apply bg-slate-950;
+}
+
+html[data-theme="light"] main {
+  @apply bg-white;
+}
+
+main {
+  @apply bg-slate-950;
+}
+
+.section-container {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+  @apply rounded-2xl border border-slate-800/60 bg-slate-900/60 p-6 shadow-lg shadow-black/40 backdrop-blur transform transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/70 hover:bg-slate-900/90 hover:shadow-emerald-500/20;
+}
+
+html[data-theme="light"] .card {
+  @apply border-slate-200 bg-slate-50 shadow-md shadow-slate-200/80 hover:border-emerald-400 hover:bg-white;
+}
+
+/* Hero Lottie card */
+.lottie-card {
+  @apply bg-transparent;
+}
+
+html[data-theme="light"] .lottie-card {
+  @apply border-emerald-300 bg-transparent shadow-[0_0_30px_rgba(16,185,129,0.28)];
+}
+
+/* Light theme: inputs and textareas use light surfaces */
+html[data-theme="light"] input,
+html[data-theme="light"] textarea {
+  @apply bg-white border-slate-300 text-slate-900 placeholder:text-slate-400;
+}
+
+/* Light theme: dark surface utility overrides used inside contact cards */
+html[data-theme="light"] .bg-slate-950\/80 {
+  @apply bg-slate-100 border border-slate-200 text-slate-900;
+}
+
+.tag-pill {
+  @apply inline-flex cursor-default items-center rounded-full border border-slate-700/80 bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-200 shadow-sm shadow-black/40 transition-transform transition-colors transition-shadow duration-150 hover:-translate-y-0.5 hover:border-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-200 hover:shadow-md hover:shadow-emerald-500/40;
+}
+
+.tag-pill--primary {
+  @apply border-emerald-400/80 bg-emerald-500/20 text-emerald-100 shadow-md shadow-emerald-500/30;
+}
+
+html[data-theme="light"] .tag-pill {
+  @apply border-slate-200 bg-slate-100 text-slate-700 shadow-none hover:-translate-y-0.5 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-800 hover:shadow-sm hover:shadow-emerald-300/50;
+}
+
+html[data-theme="light"] .tag-pill--primary {
+  @apply border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm shadow-emerald-300/40;
+}
+
+.badge-soft {
+  @apply inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 shadow-sm shadow-emerald-500/30;
+}
+
+html[data-theme="light"] .badge-soft {
+  @apply border-emerald-300 bg-emerald-50 text-black shadow-none;
+}
+
+/* Light theme: email value in contact card */
+html[data-theme="light"] a[href^="mailto:"] {
+  @apply text-black hover:text-emerald-700;
+}
+
+.nav-link {
+  @apply text-sm font-medium text-slate-300 transition hover:text-emerald-400;
+}
+
+html[data-theme="light"] .nav-link {
+  @apply text-slate-600 hover:text-emerald-500;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition-transform transition-shadow transition-colors duration-150 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/50 hover:from-emerald-300 hover:via-emerald-400 hover:to-teal-300;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-slate-100 shadow-lg shadow-black/40 transition-transform transition-shadow transition-colors duration-150 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/60 hover:border-emerald-400 hover:text-emerald-300;
+}
+
+.sending-dots {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.sending-dots__dot {
+  opacity: 0;
+  animation: sending-dots-fade 1.2s infinite ease-in-out;
+}
+
+.sending-dots__dot:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.sending-dots__dot:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes sending-dots-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+/* Contact form: mail paused — status dot only (GitHub/Vercel-style pulse) */
+@keyframes paused-status-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* inline-block: opacity animation does not run reliably on plain inline text */
+.paused-status-dot {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: 0.08em;
+  color: rgb(52 211 153); /* emerald-400 */
+  filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.45));
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .paused-status-dot {
+    animation: paused-status-dot-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+html[data-theme="light"] .btn-secondary {
+  @apply border-slate-200 bg-white text-slate-800 shadow-slate-200/80 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-300/40 hover:border-emerald-400 hover:text-emerald-700;
+}
+
+/* Hero: minimal inline quick links (no boxes) */
+.hero-quick-connect {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+  padding-top: 0.25rem;
+}
+
+.hero-quick-connect__label {
+  width: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(148 163 184);
+}
+
+html[data-theme="light"] .hero-quick-connect__label {
+  color: rgb(100 116 139);
+}
+
+.hero-quick-connect__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+}
+
+.hero-quick-connect__links a {
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: rgb(148 163 184);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+html[data-theme="light"] .hero-quick-connect__links a {
+  color: rgb(71 85 105);
+}
+
+.hero-quick-connect__links a:hover {
+  color: rgb(110 231 183);
+  text-decoration: underline;
+  text-decoration-color: rgba(16, 185, 129, 0.55);
+  text-underline-offset: 3px;
+  text-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+html[data-theme="light"] .hero-quick-connect__links a:hover {
+  color: rgb(5 150 105);
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+}
+
+.hero-quick-connect__sep {
+  font-size: 0.65rem;
+  color: rgb(71 85 105);
+  user-select: none;
+}
+
+html[data-theme="light"] .hero-quick-connect__sep {
+  color: rgb(148 163 184);
+}
+
+/* Contact panel: social / contact icon row */
+.contact-social-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-social-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  transition: all 0.2s ease;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.contact-social-btn:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 180, 0.4);
+  background: rgba(0, 255, 180, 0.08);
+  box-shadow: 0px 8px 24px rgba(0, 255, 180, 0.15);
+}
+
+.contact-social-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(15, 23, 42, 0.95),
+    0 0 0 4px rgba(16, 185, 129, 0.45);
+}
+
+.project-action-link,
+.project-github-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease,
+    opacity 0.22s ease,
+    color 0.22s ease;
+  will-change: transform, filter;
+}
+
+.project-action-link:hover,
+.project-github-link:hover {
+  z-index: 20;
+  transform: translateY(-2px) scale(1.08);
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.45));
+}
+
+.project-action-link:focus-visible,
+.project-github-link:focus-visible {
+  z-index: 20;
+  outline: none;
+  transform: translateY(-1px) scale(1.05);
+  box-shadow:
+    0 0 0 2px rgba(15, 23, 42, 0.95),
+    0 0 0 4px rgba(16, 185, 129, 0.45);
+}
+
+html[data-theme="light"] .project-action-link:focus-visible,
+html[data-theme="light"] .project-github-link:focus-visible {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(16, 185, 129, 0.35);
+}
+
+html[data-theme="light"] .contact-social-btn {
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+html[data-theme="light"] .contact-social-btn:focus-visible {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(16, 185, 129, 0.45);
+}
+
+/* Impact Snapshot badges: lighter white surface in light theme only */
+html[data-theme="light"] .impact-badge-card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  color: rgb(30 41 59);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 0 24px rgba(16, 185, 129, 0.06);
+}
+
+/* Light mode only: match theme toggle surface to Impact Snapshot tiles */
+html[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 0 24px rgba(16, 185, 129, 0.06);
+}
+
+html[data-theme="light"] .mobile-menu-btn {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 0 24px rgba(16, 185, 129, 0.06);
+}
+
+html[data-theme="light"] .back-to-top-btn {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.14);
+  color: rgb(5 150 105);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 0 24px rgba(16, 185, 129, 0.1);
+}
+
+/* Contact GitHub: white mark on dark theme, standard asset on light */
+.github-contact-icon--light-theme {
+  display: none;
+}
+.github-contact-icon--dark-theme {
+  display: block;
+}
+html[data-theme="light"] .github-contact-icon--light-theme {
+  display: block;
+}
+html[data-theme="light"] .github-contact-icon--dark-theme {
+  display: none;
+}
+
+html[data-theme="light"] header {
+  @apply bg-white/90 border-slate-200;
+}
+
+/* Footer light theme */
+html[data-theme="light"] footer {
+  @apply bg-white border-t border-slate-200 text-slate-500;
+}
+
+/* Contact mode toggle */
+.contact-toggle {
+  @apply inline-flex rounded-full border border-slate-700/70 bg-slate-900/60 overflow-hidden;
+}
+
+html[data-theme="light"] .contact-toggle {
+  @apply border-slate-300/80 bg-transparent;
+}
+
+.contact-toggle-label-inactive {
+  @apply text-slate-300;
+}
+
+html[data-theme="light"] .contact-toggle-label-inactive {
+  @apply text-slate-600;
+}
+
+.notification-banner {
+  @apply border-emerald-500/60 bg-slate-900/85 text-slate-100 shadow-lg shadow-emerald-500/30;
+}
+
+.notification-banner[data-variant="error"] {
+  @apply border-red-500/70 bg-red-950/90 text-red-50;
+}
+
+.notification-banner[data-variant="info"] {
+  @apply border-sky-500/70 bg-slate-900/90 text-slate-50;
+}
+
+.api-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  border: 1px solid rgba(248, 113, 113, 0.28);
+  border-radius: 20px;
+  padding: 0.95rem 1rem;
+  background: linear-gradient(180deg, #fff7f7 0%, #fff2f2 100%);
+  box-shadow:
+    0 10px 30px rgba(127, 29, 29, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.api-error-banner__icon-wrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 9999px;
+  background: rgba(248, 113, 113, 0.14);
+  color: rgb(239 68 68);
+}
+
+.api-error-banner__content {
+  min-width: 0;
+  flex: 1;
+}
+
+.api-error-banner__title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: rgb(51 65 85);
+}
+
+.api-error-banner__message {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: rgb(71 85 105);
+}
+
+.api-error-banner__dismiss {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  color: rgb(100 116 139);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.api-error-banner__dismiss:hover {
+  color: rgb(239 68 68);
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.api-error-banner__dismiss:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.95),
+    0 0 0 4px rgba(248, 113, 113, 0.38);
+}
+
+html[data-theme="light"] .notification-banner {
+  @apply border-emerald-400 bg-white/95 text-slate-900 shadow-md shadow-emerald-200/80;
+}
+
+html[data-theme="light"] .notification-banner[data-variant="error"] {
+  @apply border-red-400 bg-red-50 text-red-900;
+}
+
+html[data-theme="light"] .notification-banner[data-variant="info"] {
+  @apply border-sky-400 bg-sky-50 text-slate-900;
+}
+
+html[data-theme="dark"] .api-error-banner {
+  border-color: rgba(248, 113, 113, 0.35);
+  background: linear-gradient(180deg, rgba(30, 11, 11, 0.92) 0%, rgba(17, 8, 8, 0.95) 100%);
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(248, 113, 113, 0.2);
+}
+
+html[data-theme="dark"] .api-error-banner__title {
+  color: rgb(248 250 252);
+}
+
+html[data-theme="dark"] .api-error-banner__message {
+  color: rgb(203 213 225);
+}
+
+html[data-theme="dark"] .api-error-banner__dismiss {
+  color: rgb(148 163 184);
+}
+
+
+/* =========================
+   Experience Timeline UI (Premium v2)
+   ========================= */
+
+.experience-timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: linear-gradient(
+    to bottom,
+    rgba(16, 185, 129, 0.05) 0%,
+    rgba(16, 185, 129, 0.5) 15%,
+    rgba(52, 211, 153, 0.95) 50%,
+    rgba(16, 185, 129, 0.5) 85%,
+    rgba(16, 185, 129, 0.05) 100%
+  );
+  box-shadow:
+    0 0 14px rgba(16, 185, 129, 0.2),
+    0 0 28px rgba(16, 185, 129, 0.1),
+    0 0 50px rgba(16, 185, 129, 0.06);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.experience-timeline-dot {
+  position: absolute;
+  top: 2.1rem;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(209, 250, 229, 1) 0%,
+    rgba(52, 211, 153, 1) 38%,
+    rgba(5, 150, 105, 1) 100%
+  );
+  box-shadow:
+    0 0 0 5px rgba(16, 185, 129, 0.08),
+    0 0 18px rgba(16, 185, 129, 0.4),
+    0 0 36px rgba(16, 185, 129, 0.18);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.experience-glass-card {
+  position: relative;
+  z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.experience-glass-card > div {
+  transform: translateZ(0);
+}
+
+/* light theme support */
+html[data-theme="light"] .experience-timeline-line {
+  background: linear-gradient(
+    to bottom,
+    rgba(16, 185, 129, 0.06) 0%,
+    rgba(16, 185, 129, 0.24) 18%,
+    rgba(16, 185, 129, 0.42) 50%,
+    rgba(16, 185, 129, 0.24) 82%,
+    rgba(16, 185, 129, 0.06) 100%
+  );
+  box-shadow:
+    0 0 10px rgba(16, 185, 129, 0.08),
+    0 0 18px rgba(16, 185, 129, 0.04);
+}
+
+html[data-theme="light"] .experience-timeline-dot {
+  box-shadow:
+    0 0 0 4px rgba(16, 185, 129, 0.06),
+    0 0 14px rgba(16, 185, 129, 0.14),
+    0 0 24px rgba(16, 185, 129, 0.06);
+}

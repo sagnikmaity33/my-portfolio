@@ -1,0 +1,44 @@
+name: Build and Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main   # run when main branch receives new commits (e.g. merges)
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20          # or your Node version
+
+      - name: Install dependencies
+        run: npm install                 # uses package-lock.json
+
+      - name: Build static site
+        run: npm run build      
+      
+        # Deploy the contents of ./out to Hostinger via FTP
+
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASS }}
+
+          # Local folder to upload
+          local-dir: ./out/
+
+          # Remote folder on Hostinger
+          server-dir: public_html/
+
+          # Optional: clean remote folder before uploading files
+          dangerous-clean-slate: true
+          dry-run: false   # set to true for testing without actual upload
