@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform, Variant, Variants} from "framer-motion";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
   BriefcaseBusiness,
@@ -12,8 +12,9 @@ import {
   SendHorizontal,
   SquareArrowOutUpRight,
   Trophy,
-  X,
+  X,ChevronDown, Github
 } from "lucide-react";
+
 import { useEffect, useRef, useState } from "react";
 import {
   profile,
@@ -26,6 +27,7 @@ import { useNotification } from "@/components/notification/NotificationProvider"
 
 import {  MapPin, CalendarDays} from "lucide-react";
 
+import { useMagnetic } from "@/app/hooks/useMagnetic";
 
 
 const SECTIONS = [
@@ -156,7 +158,7 @@ function Navbar() {
           <div className="flex items-center gap-3">
             <div className="relative h-9 w-9 overflow-hidden rounded-full border border-emerald-400/80 bg-emerald-500/20 shadow-lg shadow-emerald-500/40">
               <span className="flex h-full w-full items-center justify-center text-sm font-semibold text-emerald-300">
-                TT
+                SM
               </span>
             </div>
             <div className="flex flex-col">
@@ -195,7 +197,7 @@ function Navbar() {
             ) : null}
           </nav>
           <div className="flex items-center gap-2">
-            <button
+            {/* <button
               type="button"
               onClick={toggleTheme}
               className="theme-toggle-btn inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/60 px-3 py-1.5 text-xs font-medium text-slate-300 shadow-sm shadow-black/40 transition hover:border-emerald-400 hover:text-emerald-300"
@@ -213,7 +215,7 @@ function Navbar() {
               <span className="hidden sm:inline">
                 {theme === "dark" ? "Dark" : "Light"}
               </span>
-            </button>
+            </button> */}
             {/* Mobile menu toggle */}
             <button
               type="button"
@@ -271,6 +273,8 @@ function Navbar() {
     </>
   );
 }
+//hero secttion present here.................................................................
+
 
 function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -366,7 +370,7 @@ function Hero() {
           <span className="badge-soft">
             {isAvailableForWork
               ? profile.availabilityBadge
-              : "Software Engineer @VISA"}
+              : "Freelancer"}
           </span>
           <span className="text-xs text-slate-400">
             {profile.location}
@@ -417,7 +421,7 @@ function Hero() {
         <div className="flex flex-wrap items-center gap-4">
           <a
             href={profile.resumePublicPath}
-            download="Resume_Tanishq_Tyagi"
+            download="sagnikmaity-resume"
             className="btn-primary"
           >
             Download Resume
@@ -462,17 +466,19 @@ function Hero() {
 
       <div className="mt-4 flex w-full justify-center md:mt-0 md:w-auto">
         <motion.div
-          className="lottie-card relative h-52 w-52 overflow-hidden rounded-[2rem] border border-emerald-400/60 shadow-[0_0_60px_rgba(16,185,129,0.45)] md:h-56 md:w-56"
+          className="lottie-card relative h-50 w-52 overflow-hidden rounded-[2rem] border border-emerald-400/60 shadow-[0_0_60px_rgba(16,185,129,0.45)] md:h-56 md:w-56"
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
           <div className="relative flex h-full w-full items-center justify-center">
             <DotLottieReact
-              src="https://lottie.host/2010ce14-90ac-46e0-af1a-89a8a3f14b05/cEtK4fqvt8.lottie"
+              src="https://lottie.host/a3236f17-3414-4357-b19f-13aa652223d4/5mAQMsmKdI.lottie"
+              
               loop
               autoplay
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "100%", paddingBottom:"4%" }}
             />
+      
           </div>
         </motion.div>
       </div>
@@ -498,138 +504,391 @@ function Hero() {
   );
 }
 
-function SkillsSection() {
+
+
+export function About() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.18,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
+
   return (
-    <motion.section
-      id="skills"
-      className="section-container pb-16 scroll-mt-24 md:scroll-mt-28"
-      variants={sectionVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.2 }}
+    <section
+      id="about"
+      className="section-container relative py-20 md:py-28 scroll-mt-24 md:scroll-mt-28"
     >
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
-          <div>
-            <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-50 sm:text-2xl">
-              <Code2 size={18} className="text-emerald-300" aria-hidden="true" />
-              Technical Skills
-            </h2>
-            <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-              A snapshot of the tools and technologies I work with.
-            </p>
-          </div>
-        </div>
+      {/* 🌌 background glow */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute right-[-10%] top-0 h-[400px] w-[400px] rounded-full bg-emerald-500/10 blur-[120px]" />
       </div>
+
       <motion.div
-        className="grid gap-4 md:grid-cols-2 xl:grid-cols-3"
+        className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10"
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ amount: 0.2 }}
-        transition={{ staggerChildren: 0.08 }}
+        viewport={{ once: true, margin: "-100px" }}
       >
-        {skills.map((group) => (
-          <motion.article
-            key={group.category}
-            className="card transition-transform hover:-translate-y-1"
-            variants={cardVariants}
+        {/* LEFT */}
+        <div className="lg:col-span-5 lg:sticky lg:top-32">
+          <motion.h2
+            variants={itemVariants}
+            className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-emerald-400"
           >
-            <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-100">
-              <FolderCode size={14} className="text-emerald-300/90" aria-hidden="true" />
-              {group.category}
-            </h3>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {group.items.map((skillItem) => (
-                <span
-                  key={skillItem.name}
-                  className={`tag-pill ${skillItem.isPrimary ? "tag-pill--primary" : ""}`}
-                >
-                  {skillItem.name}
-                </span>
-              ))}
+            <span className="h-px w-6 bg-emerald-400" />
+            About
+          </motion.h2>
+
+          <motion.h3
+            variants={itemVariants}
+            className="text-3xl font-semibold leading-tight text-slate-50 sm:text-4xl md:text-5xl"
+          >
+            I build high-performance{" "}
+            <span className="bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 bg-clip-text text-transparent">
+              distributed systems
+            </span>{" "}
+            and secure backend infrastructure.
+          </motion.h3>
+
+          {/* subtle system indicator */}
+<motion.div
+  variants={itemVariants}
+  className="mt-10 hidden items-center gap-4 opacity-60 lg:flex"
+>
+  {/* spinning orbital ring */}
+  <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400/30 animate-[spin_10s_linear_infinite]">
+    
+    {/* orbiting particle */}
+    <div className="absolute top-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.9)]" />
+
+    <div className="absolute top-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,1)]" />
+<div className="absolute inset-0 rounded-full bg-emerald-400/10 blur-md" />
+
+    {/* subtle center glow */}
+    <div className="h-1.5 w-1.5 rounded-full bg-emerald-400/70" />
+  </div>
+
+  <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
+    System Active
+  </span>
+</motion.div>
+        </div>
+
+        <div className="hidden lg:block lg:col-span-1" />
+
+        {/* RIGHT */}
+        <div className="lg:col-span-6 space-y-12">
+          {/* TEXT */}
+          <div className="space-y-6 text-base leading-relaxed text-slate-300 sm:text-lg">
+            <motion.p variants={itemVariants}>
+              I specialize in building robust backend systems that excel under
+              pressure—leveraging SpringBoot, Node.js, and scalable distributed
+              architectures to deliver reliable, high-performance solutions.
+            </motion.p>
+
+            <motion.p variants={itemVariants}>
+              I've worked on production-grade distributed systems: event-driven
+              microservices, low-latency pipelines, and infrastructure spanning
+              large-scale node networks.
+            </motion.p>
+
+            <motion.p variants={itemVariants}>
+              My roots are in Development infrastructure — high-stakes, always-on
+              environments where fault tolerance isn’t optional.
+            </motion.p>
+          </div>
+
+          {/* STATS */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+          >
+            {/* card 1 */}
+            <div className="group rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 backdrop-blur-xl transition hover:border-emerald-500/40 hover:bg-slate-900/80">
+              <div className="mb-3 text-3xl font-bold text-emerald-400 transition group-hover:scale-105">
+                10M+
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+                Daily Events Processed
+              </div>
             </div>
-          </motion.article>
-        ))}
+
+            {/* card 2 */}
+            <div className="group rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 backdrop-blur-xl transition hover:border-emerald-500/40 hover:bg-slate-900/80">
+              <div className="mb-3 text-3xl font-bold text-emerald-400 transition group-hover:scale-105">
+                100+
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+                Live Network Nodes
+              </div>
+            </div>
+
+            {/* stack */}
+            <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-transparent p-6 backdrop-blur-xl sm:col-span-2">
+              <div className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                Core Stack
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {["Springboot", "Node", "Python", "PostgreSQL", "Docker"].map(
+                  (tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300"
+                    >
+                      {tech}
+                    </span>
+                  )
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }
 
-// function ExperienceSection() {
-//   return (
-//     <motion.section
-//       id="experience"
-//       className="section-container pb-16 scroll-mt-24 md:scroll-mt-28"
-//       variants={sectionVariants}
-//       initial="hidden"
-//       whileInView="visible"
-//       viewport={{ amount: 0.2 }}
-//     >
-//       <div className="mb-6 flex items-center justify-between gap-4">
-//         <div className="flex items-center gap-3">
-//           <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
-//           <div>
-//             <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-50 sm:text-2xl">
-//               <BriefcaseBusiness size={18} className="text-emerald-300" aria-hidden="true" />
-//               Experience
-//             </h2>
-//             <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-//               Roles where I&apos;ve built production systems at scale
-//             </p>
-//           </div>
-//         </div>
-//       </div>
-//       <motion.div
-//         className="grid gap-4 md:grid-cols-2"
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.2 }}
-//         transition={{ staggerChildren: 0.1 }}
-//       >
-//         {experiences.map((exp) => (
-//           <motion.article
-//             key={exp.company}
-//             className="card flex flex-col gap-3 transition-transform hover:-translate-y-1"
-//             variants={cardVariants}
-//           >
-//             <div className="flex items-start justify-between gap-2">
-//               <div>
-//                 <h3 className="text-sm font-semibold text-slate-100">
-//                   {exp.role}
-//                 </h3>
-//                 <p className="text-xs text-slate-400">{exp.company}</p>
-//               </div>
-//               <div className="text-right text-[11px] text-slate-400">
-//                 <p>{exp.period}</p>
-//                 <p>{exp.location}</p>
-//               </div>
-//             </div>
-//             <ul className="mt-1 space-y-1.5 text-xs text-slate-300">
-//               {exp.bullets.map((bullet) => (
-//                 <li key={bullet} className="flex items-start gap-2 leading-relaxed">
-//                   <span className="mt-0.5 text-emerald-300/90">
-//                     <SendHorizontal size={14} />
-//                   </span>
-//                   <span>{bullet}</span>
-//                 </li>
-//               ))}
-//             </ul>
-//             <div className="mt-2 flex flex-wrap gap-2">
-//               {exp.tags?.map((tag) => (
-//                 <span key={tag} className="tag-pill">
-//                   {tag}
-//                 </span>
-//               ))}
-//             </div>
-//           </motion.article>
-//         ))}
-//       </motion.div>
-//     </motion.section>
-//   );
-// }
 
 
+
+
+export function SkillsSection() {
+  const row1 = ["SpringBoot", "TypeScript", "Python", "Javascript", "C", "Flutter", "ReactNative", "React"];
+  const row2 = ["Git", "Load Balancers", "Linux", "Microservices"];
+  const row3 = ["gRPC", "WebSockets", "PostgreSQL", "Redis", "Docker", "AWS"];
+
+  const MarqueeRow = ({
+    items,
+    direction = 1,
+  }: {
+    items: string[];
+    direction?: number;
+  }) => {
+    return (
+      <div className="relative mb-6 w-full overflow-hidden py-2">
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{ x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+          transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+        >
+          {[...items, ...items, ...items].map((skill, idx) => {
+  const magnetic = useMagnetic(25);
+
+  return (
+    <div
+      key={idx}
+      ref={magnetic.ref}
+      onMouseMove={magnetic.onMouseMove}
+      onMouseLeave={magnetic.onMouseLeave}
+      className="group relative mx-4 shrink-0 cursor-default rounded-full border border-slate-800/70 bg-[linear-gradient(145deg,rgba(15,23,42,0.7),rgba(2,6,23,0.6))] px-6 py-4 text-2xl font-bold text-slate-400 backdrop-blur-xl transition-all duration-300 md:text-4xl will-change-transform"
+    >
+      {/* TEXT */}
+      <span className="relative z-10 transition-all duration-300 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_18px_rgba(16,185,129,0.6)]">
+        {skill}
+      </span>
+
+      {/* HOVER GLOW */}
+      <div className="pointer-events-none absolute inset-0 rounded-full bg-emerald-500/10 opacity-0 blur-xl transition duration-300 group-hover:opacity-100" />
+
+      {/* EDGE LIGHT */}
+      <div className="pointer-events-none absolute inset-0 rounded-full border border-emerald-400/0 transition duration-300 group-hover:border-emerald-400/40" />
+
+      {/* SHIMMER */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+        <div className="absolute -left-full top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-all duration-700 group-hover:left-full group-hover:opacity-100" />
+      </div>
+    </div>
+  );
+})}
+        </motion.div>
+      </div>
+    );
+  };
+
+  return (
+    <section
+      id="skills"
+      className="relative overflow-hidden py-24 bg-slate-950"
+    >
+      {/* TOP FADE */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-950 to-transparent z-10" />
+
+      {/* HEADER */}
+      <div className="relative z-20 mb-16 px-6 text-center">
+        <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-400 mb-4">
+          04. Capabilities
+        </h2>
+        <h3 className="text-4xl md:text-5xl font-bold text-slate-100">
+          Technical Arsenal
+        </h3>
+      </div>
+
+      {/* MARQUEE */}
+      <div className="relative z-10 flex flex-col items-center rotate-[-2deg] w-[110%] -ml-[5%]">
+        <MarqueeRow items={row1} direction={1} />
+        <MarqueeRow items={row2} direction={-1} />
+        <MarqueeRow items={row3} direction={1} />
+      </div>
+
+      {/* BOTTOM GLOW */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-emerald-500/10 to-transparent opacity-30 z-10" />
+    </section>
+  );
+}
+
+
+
+import { Sparkles } from "lucide-react";
+import React from "react";
+
+// Custom hook for magnetic effect on hover
+const useMagnetic = (strength: number = 25) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const distance = Math.sqrt(
+      Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+    );
+
+    if (distance < 100) {
+      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+      setOffset({
+        x: Math.cos(angle) * strength,
+        y: Math.sin(angle) * strength,
+      });
+    }
+  };
+
+  const onMouseLeave = () => {
+    setOffset({ x: 0, y: 0 });
+  };
+
+  return { ref, onMouseMove, onMouseLeave, offset };
+};
+
+const MarqueeRow = ({
+  items,
+  direction = 1,
+}: {
+  items: { name: string; isPrimary: boolean }[];
+  direction?: number;
+}) => {
+  return (
+    <div className="relative mb-8 w-full overflow-hidden py-3">
+      <motion.div
+        className="flex whitespace-nowrap gap-6"
+        animate={{ x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+        transition={{ ease: "linear", duration: 35, repeat: Infinity }}
+      >
+        {[...items, ...items, ...items].map((skill, idx) => {
+          const magnetic = useMagnetic(25);
+          const isPrimary = skill.isPrimary;
+
+          return (
+            <motion.div
+              key={idx}
+              ref={magnetic.ref}
+              onMouseMove={magnetic.onMouseMove}
+              onMouseLeave={magnetic.onMouseLeave}
+              animate={{
+                x: magnetic.offset.x,
+                y: magnetic.offset.y,
+              }}
+              transition={{ type: "spring", stiffness: 150, damping: 15 }}
+              className={`group relative shrink-0 cursor-default rounded-2xl backdrop-blur-xl transition-all duration-300 will-change-transform ${
+                isPrimary
+                  ? "border border-emerald-500/50 bg-[linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.08))] px-8 py-4 md:px-10 md:py-5"
+                  : "border border-slate-700/60 bg-[linear-gradient(145deg,rgba(15,23,42,0.8),rgba(2,6,23,0.7))] px-6 py-3 md:px-8 md:py-4"
+              }`}
+            >
+              {/* PRIMARY INDICATOR */}
+              {isPrimary && (
+                <div className="absolute -top-2 -right-2 z-20">
+                  <motion.div
+                    className="flex items-center gap-1 rounded-full bg-emerald-500/90 px-2 py-1"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", delay: idx * 0.02 }}
+                  >
+                    <Sparkles size={10} className="text-white" />
+                    <span className="text-[9px] font-bold uppercase text-white tracking-wider">
+                      Primary
+                    </span>
+                  </motion.div>
+                </div>
+              )}
+
+              {/* TEXT */}
+              <span
+                className={`relative z-10 font-bold transition-all duration-300 ${
+                  isPrimary
+                    ? "text-lg md:text-xl text-emerald-100 group-hover:text-emerald-200"
+                    : "text-sm md:text-lg text-slate-300 group-hover:text-slate-100"
+                } group-hover:drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]`}
+              >
+                {skill.name}
+              </span>
+
+              {/* HOVER GLOW - More intense for primary */}
+              <div
+                className={`pointer-events-none absolute inset-0 rounded-2xl opacity-0 blur-2xl transition duration-300 group-hover:opacity-100 ${
+                  isPrimary
+                    ? "bg-emerald-500/25"
+                    : "bg-emerald-500/10"
+                }`}
+              />
+
+              {/* EDGE LIGHT */}
+              <div
+                className={`pointer-events-none absolute inset-0 rounded-2xl border transition duration-300 ${
+                  isPrimary
+                    ? "border-emerald-400/0 group-hover:border-emerald-300/60"
+                    : "border-emerald-400/0 group-hover:border-emerald-400/40"
+                }`}
+              />
+
+              {/* SHIMMER EFFECT */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+                <div className="absolute -left-full top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 transition-all duration-700 group-hover:left-full group-hover:opacity-100" />
+              </div>
+
+              {/* PARTICLE EFFECT FOR PRIMARY */}
+              {isPrimary && (
+                <div className="pointer-events-none absolute inset-0 rounded-2xl">
+                  <div className="absolute top-1 right-2 h-1 w-1 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 blur-sm" />
+                  <div className="absolute bottom-2 left-3 h-1.5 w-1.5 rounded-full bg-emerald-300 opacity-0 group-hover:opacity-75 blur-sm" />
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </div>
+  );
+};
 
 
 const timelineItemVariants = {
@@ -653,7 +912,19 @@ const timelineItemVariants = {
   },
 };
 
-export function ExperienceSection() {
+
+//changing now - mirror issue
+
+function ExperienceSection() {
+  const timelineRef = useRef<HTMLDivElement | null>(null);
+
+const { scrollYProgress } = useScroll({
+  target: timelineRef,
+  offset: ["start end", "end start"],
+});
+
+const yMove = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <motion.section
       id="experience"
@@ -687,11 +958,56 @@ export function ExperienceSection() {
       </div>
 
       {/* Timeline wrapper */}
-      <div className="relative mx-auto max-w-6xl">
+      <div ref={timelineRef} className="relative mx-auto max-w-6xl">
         {/* Center line */}
         <div className="experience-timeline-line hidden md:block" />
+        
+        <motion.div
+  style={{ scaleY: scrollYProgress }}
+  className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[3px] -translate-x-1/2 origin-top md:block z-20"
+>
+  <div className="h-full w-full rounded-full bg-gradient-to-b from-emerald-300 via-emerald-500 to-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.7)]" />
+</motion.div>
+<motion.div
+  style={{ y: yMove }}
+  className="pointer-events-none absolute left-1/2 top-0 hidden -translate-x-1/2 md:block z-30"
+>
+  <div className="h-24 w-[6px] rounded-full bg-gradient-to-b from-transparent via-emerald-300 to-transparent opacity-80 blur-md" />
+</motion.div>
+
+        {/* 🔥 SINGLE animated orb */}
+  <motion.div
+    style={{ y: yMove }}
+    className="pointer-events-none absolute left-1/2 top-0 hidden -translate-x-1/2 md:block z-30"
+  >
+    <div className="relative">
+      {/* core */}
+      <div className="h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.9)]" />
+
+      {/* pulse */}
+      <div className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-30" />
+
+      {/* aura */}
+      <div className="absolute -inset-2 rounded-full bg-emerald-500/20 blur-xl" />
+    </div>
+  </motion.div>
 
         <div className="space-y-12 md:space-y-20">
+          <motion.div
+  style={{ y: yMove }}
+  className="pointer-events-none absolute left-1/2 top-0 hidden -translate-x-1/2 md:block z-30"
+>
+  <div className="relative">
+    {/* core dot */}
+    <div className="h-4 w-4 rounded-full bg-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.95)]" />
+
+    {/* glow pulse */}
+    <div className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-30" />
+
+    {/* aura */}
+    <div className="absolute -inset-2 rounded-full bg-emerald-500/20 blur-xl" />
+  </div>
+</motion.div>
           {experiences.map((exp, index) => {
             const isLeft = index % 2 === 0;
 
@@ -704,13 +1020,7 @@ export function ExperienceSection() {
                 style={{ perspective: "1600px" }}
               >
                 {/* Center timeline dot */}
-                <motion.div
-                  className="experience-timeline-dot hidden md:block"
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: false, amount: 0.4 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                />
+
 
                 {/* Connector line from center to card */}
                 <div
@@ -721,6 +1031,9 @@ export function ExperienceSection() {
                       : "left-[calc(50%+0.55rem)] from-transparent to-emerald-400/70",
                   ].join(" ")}
                 />
+
+                {/* existing line */}
+
 
                 <motion.article
                   custom={isLeft}
@@ -756,10 +1069,28 @@ export function ExperienceSection() {
                     <div
                       className={[
                         "mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between",
-                        isLeft ? "md:text-right" : "md:text-left",
+                        isLeft ? "md:flex-row-reverse md:text-left" : "md:text-left",
                       ].join(" ")}
                     >
-                      <div className={["min-w-0", isLeft ? "md:order-2" : ""].join(" ")}>
+                      {/* Date/Location - appears first on left cards due to flex-row-reverse */}
+                      <div
+                        className={[
+                          "flex flex-col gap-1.5 text-[11px] text-slate-400 sm:text-xs",
+                          isLeft ? "md:order-first" : "",
+                        ].join(" ")}
+                      >
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-800/80 bg-slate-900/70 px-3 py-1.5">
+                          <CalendarDays size={13} className="text-emerald-300/80" />
+                          {exp.period}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-800/80 bg-slate-900/70 px-3 py-1.5">
+                          <MapPin size={13} className="text-emerald-300/80" />
+                          {exp.location}
+                        </span>
+                      </div>
+
+                      {/* Role/Company - appears last on left cards due to flex-row-reverse */}
+                      <div className={["min-w-0"].join(" ")}>
                         <div className="mb-2 flex items-center gap-2">
                           <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.12)]">
                             <BriefcaseBusiness size={18} />
@@ -776,24 +1107,6 @@ export function ExperienceSection() {
                           {exp.company}
                         </p>
                       </div>
-
-                      <div
-                        className={[
-                          "flex flex-col gap-1.5 text-[11px] text-slate-400 sm:text-xs",
-                          isLeft
-                            ? "md:items-end md:text-right md:order-1"
-                            : "md:items-start md:text-left",
-                        ].join(" ")}
-                      >
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-800/80 bg-slate-900/70 px-3 py-1.5">
-                          <CalendarDays size={13} className="text-emerald-300/80" />
-                          {exp.period}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-800/80 bg-slate-900/70 px-3 py-1.5">
-                          <MapPin size={13} className="text-emerald-300/80" />
-                          {exp.location}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Bullets */}
@@ -803,7 +1116,7 @@ export function ExperienceSection() {
                           key={bullet}
                           className={[
                             "flex items-start gap-3 leading-relaxed",
-                            isLeft ? "md:flex-row-reverse md:text-right" : "md:text-left",
+                            isLeft ? "md:text-left" : "md:text-left",
                           ].join(" ")}
                         >
                           <span className="mt-0.5 shrink-0 rounded-full bg-emerald-500/10 p-1 text-emerald-300/90 transition-transform duration-300 group-hover:scale-110">
@@ -819,7 +1132,7 @@ export function ExperienceSection() {
                       <div
                         className={[
                           "mt-6 flex flex-wrap gap-2",
-                          isLeft ? "md:justify-end" : "md:justify-start",
+                          isLeft ? "md:justify-start" : "md:justify-start",
                         ].join(" ")}
                       >
                         {exp.tags.map((tag) => (
@@ -841,167 +1154,394 @@ export function ExperienceSection() {
 }
 
 
-function ProjectsSection() {
+
+export function ProjectsSection() {
+  const [expanded, setExpanded] = useState(false);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+ 
+  // Separate featured (4) and additional projects
+  const featuredProjects = projects.slice(0, 4);
+  const additionalProjects = projects.slice(4);
+  const displayedProjects = expanded ? projects : featuredProjects;
+ 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
+      },
+    },
+  };
+ 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, rotateX: -15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.34, 1.56, 0.64, 1],
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 20,
+      transition: { duration: 0.3 },
+    },
+  };
+ 
   return (
     <motion.section
       id="projects"
-      className="section-container pb-16 scroll-mt-24 md:scroll-mt-28"
-      variants={sectionVariants}
+      className="section-container relative pb-32 scroll-mt-24 md:scroll-mt-28 overflow-hidden"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+        },
+      }}
       initial="hidden"
       whileInView="visible"
       viewport={{ amount: 0.2 }}
     >
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
+      {/* 🔥 Animated background gradients */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent_60%)] blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 top-32 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.08),transparent_70%)] blur-3xl" />
+ 
+      {/* HEADER with animated underline */}
+      <motion.div
+        className="mb-16 flex flex-col gap-2"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="flex items-center gap-4">
+          <motion.span
+            className="h-12 w-1 rounded-full bg-emerald-500/80 shadow-[0_0_20px_rgba(16,185,129,0.5)]"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: false }}
+          />
           <div>
-            <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-50 sm:text-2xl">
-              <FolderCode size={18} className="text-emerald-300" aria-hidden="true" />
+            <h2 className="flex items-center gap-3 text-3xl sm:text-4xl font-bold text-slate-50">
+              <motion.div
+                initial={{ rotate: -20 }}
+                whileInView={{ rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: false }}
+              >
+                <FolderCode size={32} className="text-emerald-400" />
+              </motion.div>
               Projects
             </h2>
-            <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-              Selected work spanning Web3, backend, and mobile.
-            </p>
-          </div>
-        </div>
-      </div>
-      <motion.div
-        className="grid gap-4 md:grid-cols-2"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2 }}
-        transition={{ staggerChildren: 0.1 }}
-      >
-        {projects.map((project) => (
-          <motion.article
-            key={project.name}
-            className="card relative flex flex-col gap-3 transition-transform hover:-translate-y-1"
-            variants={cardVariants}
-          >
-            <div className="absolute right-5 top-5 flex items-center gap-2">
-              {project.codeUrl ? (
-                <a
-                  href={project.codeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-github-link text-slate-400 transition hover:text-emerald-300"
-                  aria-label={`Open code for ${project.name}`}
-                  title={`Open ${project.name} code`}
-                >
-                  <img
-                    src="/github-white-icon.png"
-                    alt=""
-                    width={18}
-                    height={18}
-                    decoding="async"
-                    className="github-contact-icon--dark-theme h-[18px] w-[18px] shrink-0 object-contain opacity-90"
-                  />
-                  <img
-                    src="/github-icon.png"
-                    alt=""
-                    width={18}
-                    height={18}
-                    decoding="async"
-                    className="github-contact-icon--light-theme h-[18px] w-[18px] shrink-0 object-contain opacity-90"
-                  />
-                </a>
-              ) : null}
-              {project.demoUrl ? (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-action-link text-slate-400 transition hover:text-emerald-300"
-                  aria-label={`Open demo for ${project.name}`}
-                  title={`Open ${project.name} demo`}
-                >
-                  <SquareArrowOutUpRight size={18} />
-                </a>
-              ) : null}
-            </div>
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h3 className="text-sm font-semibold text-slate-100">
-                  {project.name}
-                </h3>
-                <p className="text-[11px] text-slate-400">{project.period}</p>
-              </div>
-            </div>
-            <p className="text-xs text-slate-300">{project.description}</p>
-            <ul className="mt-1 space-y-1.5 text-xs text-slate-300">
-              {project.bullets.map((bullet) => (
-                <li key={bullet} className="leading-relaxed">
-                  <span className="mr-1">✔️ </span>
-                  {bullet}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span key={tag} className="tag-pill">
-                  {tag}
+            <motion.p
+              className="mt-2 text-sm text-slate-400 sm:text-base"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: false }}
+            >
+              Crafted solutions across Web, backend systems, and mobile experiences
+              {additionalProjects.length > 0 && (
+                <span className="ml-1 text-emerald-400">
+                  ({projects.length} total)
                 </span>
-              ))}
-            </div>
-          </motion.article>
-        ))}
-      </motion.div>
-    </motion.section>
-  );
-}
-
-function AwardsSection() {
-  if (!awards?.length) return null;
-
-  return (
-    <motion.section
-      id="awards"
-      className="section-container pb-16 scroll-mt-24 md:scroll-mt-28"
-      variants={sectionVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.2 }}
-    >
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
-          <div>
-            <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-50 sm:text-2xl">
-              <Trophy size={18} className="text-emerald-300" aria-hidden="true" />
-              Awards & Bounties
-            </h2>
-            <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-              Recognition for impact, innovation, and delivery.
-            </p>
+              )}
+            </motion.p>
           </div>
         </div>
-      </div>
+      </motion.div>
+ 
+      {/* GRID with staggered animations */}
       <motion.div
-        className="grid gap-4 md:grid-cols-3"
+        className="grid gap-6 lg:gap-8 md:grid-cols-2"
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ amount: 0.2 }}
-        transition={{ staggerChildren: 0.08 }}
+        viewport={{ amount: 0.15, margin: "-100px" }}
       >
-        {awards.map((award) => (
-          <motion.article
-            key={award.title}
-            className="card space-y-2 transition-transform hover:-translate-y-1"
-            variants={cardVariants}
-          >
-            <h3 className="text-sm font-semibold text-slate-100">
-              {award.title}
-            </h3>
-            <p className="text-[11px] text-emerald-300">
-              {award.issuer} · {award.date}
-            </p>
-            <p className="text-xs text-slate-300">{award.description}</p>
-          </motion.article>
-        ))}
+        <AnimatePresence mode="wait">
+          {displayedProjects.map((project, index) => (
+            <motion.article
+              key={project.name}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              layout
+              onHoverStart={() => setHoveredProject(project.name)}
+              onHoverEnd={() => setHoveredProject(null)}
+              className="group relative flex flex-col rounded-3xl overflow-hidden backdrop-blur-xl transition-all duration-500"
+              style={{ perspective: "1200px" }}
+            >
+              {/* Background with gradient glow */}
+              <div className="absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(15,23,42,0.9),rgba(2,6,23,0.9))] rounded-3xl" />
+              <div className="absolute inset-0 -z-10 rounded-3xl border border-slate-800/60 transition duration-500 group-hover:border-emerald-500/40" />
+ 
+              {/* Animated glow halo on hover */}
+              <motion.div
+                className="pointer-events-none absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-emerald-500/30 via-emerald-500/10 to-cyan-400/20 opacity-0 blur-2xl transition duration-500 group-hover:opacity-100 -z-10"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+              />
+ 
+              {/* Gradient shimmer on top */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent" />
+ 
+              {/* PREVIEW IMAGE or gradient placeholder */}
+              {project.preview ? (
+                <motion.div
+                  className="relative h-56 w-full overflow-hidden rounded-t-3xl bg-gradient-to-br from-slate-700/40 to-slate-900/60"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <img
+                    src={project.preview}
+                    alt={project.name}
+                    className="h-full w-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+                  />
+                  {/* Overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                </motion.div>
+              ) : (
+                <div className="relative h-32 w-full rounded-t-3xl bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-slate-900/60 overflow-hidden">
+                  {/* Animated gradient background for backend projects */}
+                  <div className="absolute inset-0 opacity-50">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(16,185,129,0.2),transparent_50%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(6,182,212,0.15),transparent_50%)]" />
+                  </div>
+                  <div className="relative h-full flex items-center justify-center">
+                    <div className="text-emerald-400/40">
+                      <FolderCode size={40} />
+                    </div>
+                  </div>
+                </div>
+              )}
+ 
+              {/* CONTENT SECTION */}
+              <div className="relative flex flex-col gap-4 p-6 sm:p-7">
+                {/* Header with type badge and actions */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <span className="inline-flex px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-sm">
+                        {project.type || "Project"}
+                      </span>
+                      {project.featured && (
+                        <span className="inline-flex px-2 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-[9px] font-bold uppercase tracking-wider text-amber-300 animate-pulse">
+                          ⭐ Featured
+                        </span>
+                      )}
+                    </div>
+ 
+                    <motion.h3
+                      className="text-xl sm:text-2xl font-bold text-slate-50 group-hover:text-emerald-300 transition duration-300 line-clamp-2"
+                      initial={{ opacity: 0.8 }}
+                      whileHover={{ opacity: 1, letterSpacing: "0.02em" }}
+                    >
+                      {project.name}
+                    </motion.h3>
+                    <p className="mt-1 text-xs sm:text-sm text-slate-400">
+                      {project.period}
+                    </p>
+                  </div>
+ 
+                  {/* Action icons */}
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {project.codeUrl && (
+                      <motion.a
+                        href={project.codeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800/50 text-slate-400 transition hover:bg-emerald-500/20 hover:text-emerald-300 hover:border hover:border-emerald-500/40"
+                        whileHover={{ scale: 1.15, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Github size={16} />
+                      </motion.a>
+                    )}
+ 
+                    {project.demoUrl && (
+                      <motion.a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 border border-emerald-500/40 hover:border-emerald-400/60"
+                        whileHover={{ scale: 1.15, y: -2, rotate: 45 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <SquareArrowOutUpRight size={16} />
+                      </motion.a>
+                    )}
+                  </div>
+                </div>
+ 
+                {/* Description */}
+                <motion.p
+                  className="text-sm text-slate-300 leading-relaxed line-clamp-2"
+                  initial={{ opacity: 0.7 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  {project.description}
+                </motion.p>
+ 
+                {/* Bullets with animated dots */}
+                {project.bullets && project.bullets.length > 0 && (
+                  <motion.ul
+                    className="space-y-2 text-xs text-slate-300"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ staggerChildren: 0.05 }}
+                  >
+                    {project.bullets.slice(0, 2).map((bullet, idx) => (
+                      <motion.li
+                        key={bullet}
+                        className="flex items-start gap-2.5"
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        viewport={{ once: false }}
+                      >
+                        <motion.span
+                          className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.9)] flex-shrink-0"
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          transition={{ type: "spring", delay: idx * 0.1 }}
+                          viewport={{ once: false }}
+                        />
+                        <span className="leading-relaxed pt-0.5">{bullet}</span>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                )}
+ 
+                {/* Tags with hover effects */}
+                <motion.div className="mt-3 flex flex-wrap gap-2">
+                  {project.tags.map((tag, idx) => (
+                    <motion.span
+                      key={tag}
+                      className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-[10px] sm:text-xs font-medium text-emerald-300 backdrop-blur-md transition group-hover:border-emerald-400/50 group-hover:bg-emerald-500/15"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: idx * 0.05 }}
+                      viewport={{ once: false }}
+                      whileHover={{
+                        scale: 1.08,
+                        backgroundColor: "rgba(16, 185, 129, 0.2)",
+                      }}
+                    >
+                      {tag}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.article>
+          ))}
+        </AnimatePresence>
       </motion.div>
+ 
+      {/* VIEW MORE / COLLAPSE BUTTON */}
+      {additionalProjects.length > 0 && (
+        <motion.div
+          className="mt-16 flex justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.3 }}
+        >
+          <motion.button
+            onClick={() => setExpanded(!expanded)}
+            className="group relative inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-8 py-3.5 font-semibold text-emerald-300 backdrop-blur-md transition duration-300 hover:border-emerald-400/60 hover:bg-emerald-500/20 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {/* Glow background */}
+            <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-emerald-500/20 via-transparent to-cyan-400/20 opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
+ 
+            <span className="relative">
+              {expanded ? "Show Less Projects" : `View More Projects`}
+              {additionalProjects.length > 0 && (
+                <span className="ml-2 text-sm font-normal opacity-80">
+                  ({additionalProjects.length})
+                </span>
+              )}
+            </span>
+ 
+            <motion.div
+              animate={{ rotate: expanded ? 180 : 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <ChevronDown size={18} />
+            </motion.div>
+          </motion.button>
+        </motion.div>
+      )}
+ 
+      {/* Decorative elements */}
+      <div className="pointer-events-none absolute bottom-0 -right-40 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.05),transparent_70%)] blur-3xl" />
     </motion.section>
   );
 }
+
+
+// function AwardsSection() {
+//   if (!awards?.length) return null;
+
+//   return (
+//     <motion.section
+//       id="awards"
+//       className="section-container pb-16 scroll-mt-24 md:scroll-mt-28"
+//       variants={sectionVariants}
+//       initial="hidden"
+//       whileInView="visible"
+//       viewport={{ amount: 0.2 }}
+//     >
+//       <div className="mb-6 flex items-center justify-between gap-4">
+//         <div className="flex items-center gap-3">
+//           <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
+//           <div>
+//             <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-50 sm:text-2xl">
+//               <Trophy size={18} className="text-emerald-300" aria-hidden="true" />
+//               Awards & Bounties
+//             </h2>
+//             <p className="mt-1 text-xs text-slate-400 sm:text-sm">
+//               Recognition for impact, innovation, and delivery.
+//             </p>
+//           </div>
+//         </div>
+//       </div>
+//       <motion.div
+//         className="grid gap-4 md:grid-cols-3"
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ amount: 0.2 }}
+//         transition={{ staggerChildren: 0.08 }}
+//       >
+//         {awards.map((award) => (
+//           <motion.article
+//             key={award.title}
+//             className="card space-y-2 transition-transform hover:-translate-y-1"
+//             variants={cardVariants}
+//           >
+//             <h3 className="text-sm font-semibold text-slate-100">
+//               {award.title}
+//             </h3>
+//             <p className="text-[11px] text-emerald-300">
+//               {award.issuer} · {award.date}
+//             </p>
+//             <p className="text-xs text-slate-300">{award.description}</p>
+//           </motion.article>
+//         ))}
+//       </motion.div>
+//     </motion.section>
+//   );
+// }
 
 // Cloudflare Turnstile globals
 declare global {
@@ -1566,7 +2106,8 @@ function ContactSection() {
                     <>
                       Get relevant Job ID from {" "}
                       <a
-                        href="https://www.visa.co.uk/en_gb/jobs/"
+                        // href="https://www.visa.co.uk/en_gb/jobs/"
+                        href="#"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
@@ -1588,7 +2129,7 @@ function ContactSection() {
                 />
                 <button
                   type="button"
-                  className={`relative z-10 px-3 py-1 rounded-full transition-colors duration-150 ${
+                  className={`relative z-10 px-2 py-1 rounded-full transition-colors duration-150 ${
                     !isReferral
                       ? "text-slate-950"
                       : "contact-toggle-label-inactive"
@@ -1599,7 +2140,7 @@ function ContactSection() {
                 </button>
                 <button
                   type="button"
-                  className={`relative z-10 px-3 py-1 rounded-full transition-colors duration-150 ${
+                  className={`relative z-10 px-2 py-1 rounded-full transition-colors duration-150 ${
                     isReferral
                       ? "text-slate-950"
                       : "contact-toggle-label-inactive"
@@ -1836,9 +2377,10 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
+          <About/>
           <ExperienceSection />
           <ProjectsSection />
-          <AwardsSection />
+          {/* <AwardsSection /> */}
           <SkillsSection />
           <ContactSection />
         </main>

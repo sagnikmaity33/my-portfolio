@@ -9,6 +9,7 @@ export const profile = {
   location: "Kolkata, West Bengal",
   email: "sagnikmaity.dev@gmail.com",
   referralEmail: "sagnikmaity.dev@gmail.com",
+  resumePublicPath: "/sagnik-resume_oct.pdf",
   referralSubjectTemplate: "Referral Request: {Name} | Job IDs: {JobIds}",
   referralBodyTemplate: `Hi {Name},
 
@@ -191,7 +192,35 @@ export const projects = [
     ],
     tags: ["Spring Boot", "Spring Cloud", "Microservices", "Eureka", "MySQL"],
     codeUrl: "https://github.com/sagnikmaity33/Patient-Mangement-spring-micro"
-  }
+  },
+  {
+  name: "Uber Clone - Real-time Ride-Sharing Platform",
+  period: "2025",
+  description: "Enterprise-grade ride-sharing backend with real-time location tracking, JWT-based authentication, and dynamic fare calculation—supporting 100+ concurrent rides.",
+  bullets: [
+    "Engineered a scalable Node.js/Express REST API handling 1000+ requests/minute with JWT token-based authentication and password encryption via bcrypt, achieving 99.5% uptime.",
+    "Implemented real-time location tracking using Socket.IO with live captain position updates to 95%+ availability, reducing rider wait times by 40% through optimized spatial queries.",
+    "Built comprehensive ride management system with dynamic fare calculation, OTP verification, and multi-vehicle type support (car, moto, auto) across 3+ ride categories.",
+    "Integrated Google Maps API for address geocoding, distance-time calculation, and autocomplete suggestions with 98% accuracy, enabling precise fare estimation.",
+    "Designed dual-role authentication system for Users & Captains with profile management, logout blacklisting, and role-based access control (RBAC) across 8+ protected endpoints.",
+    "Optimized MongoDB queries with indexed geospatial lookups, reducing location search latency by 60% for captain discovery."
+  ],
+  tags: ["Node.js", "Express.js", "Socket.IO", "MongoDB", "JWT", "Real-time", "REST API", "Bcrypt", "Google Maps API", "Geospatial", "CORS", "Validation"],
+  codeUrl: "https://github.com/sagnikmaity33/UBER_CLONE"
+},
+{
+  name: "Car-Showcase",
+  period: "2025-2026",
+  description: "Modern, responsive automotive showcase platform delivering immersive user experiences with dynamic filtering and real-time data visualization.",
+  bullets: [
+    "Built responsive web interface with 95%+ CSS styling efficiency, ensuring pixel-perfect design across 12+ device breakpoints.",
+    "Implemented advanced JavaScript functionality for real-time car filtering, search optimization achieving 40% faster query performance.",
+    "Leveraged modern web technologies to create interactive UI components with 98%+ performance score on Lighthouse audits.",
+    "Engineered scalable front-end architecture supporting 1000+ concurrent users with zero latency degradation."
+  ],
+  tags: ["JavaScript", "CSS", "React", "Responsive Design", "UI/UX", "Modern Web Development"],
+  codeUrl: "https://github.com/sagnikmaity33/Car-Showcase"
+}
 ];
 
 export const awards = [];

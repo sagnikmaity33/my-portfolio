@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { NotificationProvider } from "@/components/notification/NotificationProvider";
 import { BackToTopButton } from "@/components/BackToTopButton";
+import CursorTrail from "./CursorTrail";
+import CursorDust from "./CursorDust";
 
 const inter = localFont({
   src: "../../public/fonts/InterVariable.woff2",
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
     images: ["https://sagnikmaity.in/icon.jpg"],
   },
   icons: {
-    icon: "/icon.jpg",
+    icon: "/icon1 (2).png",
   },
 };
 
@@ -54,6 +56,9 @@ export default function RootLayout({
         className={`${inter.variable} antialiased bg-slate-950 text-slate-100`}
       >
         <NotificationProvider>
+          <CursorDust />
+
+          <CursorTrail />
           {children}
           <BackToTopButton />
         </NotificationProvider>
