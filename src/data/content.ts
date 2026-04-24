@@ -1,3 +1,5 @@
+import { features } from "node:process";
+
 export const profile = {
   name: "Sagnik Maity",
   title: "Full Stack Developer & AI Engineer",
@@ -40,7 +42,8 @@ Sagnik Maity`,
   github: "https://github.com/sagnikmaity33",
   linkedin: "https://www.linkedin.com/in/sagnik-maity-9b07a6283/",
   /** Hosted under public/ — used for hero + contact resume download */
-  resumePublicPath: "/sagnik-resume_oct.pdf",
+
+ 
   roles: ["AI Engineer", "Backend Developer", "Full Stack Developer"],
 };
 
@@ -167,7 +170,10 @@ export const projects = [
       "Optimized middleware latency to <2ms, ensuring zero impact on downstream microservice performance."
     ],
     tags: ["Java", "Spring Boot", "Redis", "Resilience4j", "System Design"],
-    codeUrl: "https://github.com/sagnikmaity33/api-rate-limiter"
+    codeUrl: "https://github.com/sagnikmaity33/api-rate-limiter",
+    preview:"#",
+    type:"Backend",
+    demoUrl:"#"
   },
   {
     name: "IPAM - IP Address Management",
@@ -179,7 +185,10 @@ export const projects = [
       "Supports subnetting for 1M+ address spaces with sub-millisecond lookup times."
     ],
     tags: ["Java", "Spring Boot", "Redis", "Redisson", "Microservices"],
-    codeUrl: "https://github.com/sagnikmaity33/IPAM"
+    codeUrl: "https://github.com/sagnikmaity33/IPAM",
+    preview:"#",
+    type:"Backend",
+    demoUrl:"#"
   },
   {
     name: "Patient Management Microservices",
@@ -191,7 +200,10 @@ export const projects = [
       "Utilized Eureka and Spring Cloud Gateway for seamless service discovery and routing."
     ],
     tags: ["Spring Boot", "Spring Cloud", "Microservices", "Eureka", "MySQL"],
-    codeUrl: "https://github.com/sagnikmaity33/Patient-Mangement-spring-micro"
+    codeUrl: "https://github.com/sagnikmaity33/Patient-Mangement-spring-micro",
+    preview:"#",
+    type:"Backend",
+    demoUrl:"#"
   },
   {
   name: "Uber Clone - Real-time Ride-Sharing Platform",
@@ -206,7 +218,10 @@ export const projects = [
     "Optimized MongoDB queries with indexed geospatial lookups, reducing location search latency by 60% for captain discovery."
   ],
   tags: ["Node.js", "Express.js", "Socket.IO", "MongoDB", "JWT", "Real-time", "REST API", "Bcrypt", "Google Maps API", "Geospatial", "CORS", "Validation"],
-  codeUrl: "https://github.com/sagnikmaity33/UBER_CLONE"
+  codeUrl: "https://github.com/sagnikmaity33/UBER_CLONE",
+  featured: "#",
+    preview:"#",
+    demoUrl:"#"
 },
 {
   name: "Car-Showcase",
@@ -219,7 +234,9 @@ export const projects = [
     "Engineered scalable front-end architecture supporting 1000+ concurrent users with zero latency degradation."
   ],
   tags: ["JavaScript", "CSS", "React", "Responsive Design", "UI/UX", "Modern Web Development"],
-  codeUrl: "https://github.com/sagnikmaity33/Car-Showcase"
+  codeUrl: "https://github.com/sagnikmaity33/Car-Showcase",
+    preview:"#",
+    demoUrl:"#"
 }
 ];
 

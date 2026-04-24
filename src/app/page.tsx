@@ -27,7 +27,6 @@ import { useNotification } from "@/components/notification/NotificationProvider"
 
 import {  MapPin, CalendarDays} from "lucide-react";
 
-import { useMagnetic } from "@/app/hooks/useMagnetic";
 
 
 const SECTIONS = [
@@ -89,23 +88,23 @@ function Navbar() {
   }, []);
 
   // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
 
-    const stored = window.localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-      document.documentElement.setAttribute("data-theme", stored);
-      return;
-    }
+  //   const stored = window.localStorage.getItem("theme");
+    // if (stored === "light" || stored === "dark") {
+    //   setTheme(stored);
+    //   document.documentElement.setAttribute("data-theme", stored);
+    //   return;
+    // }
 
-    const prefersLight = window.matchMedia(
-      "(prefers-color-scheme: light)",
-    ).matches;
-    const initial = prefersLight ? "light" : "dark";
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-  }, []);
+  //   const prefersLight = window.matchMedia(
+  //     "(prefers-color-scheme: light)",
+  //   ).matches;
+  //   const initial = prefersLight ? "light" : "dark";
+  //   setTheme(initial);
+  //   document.documentElement.setAttribute("data-theme", initial);
+  // }, []);
 
   // Persist theme changes
   useEffect(() => {
@@ -292,69 +291,125 @@ function Hero() {
     prefersReducedMotion ? roles[0].length : 0,
   );
   const [roleIdx, setRoleIdx] = useState(0);
-  const [nameDone, setNameDone] = useState(prefersReducedMotion);
+  // const [nameDone, setNameDone] = useState(prefersReducedMotion);
+
+const nameDone = prefersReducedMotion || nameIndex >= fullName.length;
 
   // Type the name once
+// useEffect(() => {
+//   if (prefersReducedMotion || nameDone) return;
+
+//   if (nameIndex >= fullName.length) {
+//     setNameDone(true);
+//     return;
+//   }
+
+//   const typingSpeed = 90;
+
+//   const timeoutId = window.setTimeout(() => {
+//     setNameIndex((value) => value + 1);
+//   }, typingSpeed);
+
+//   return () => window.clearTimeout(timeoutId);
+// }, [nameIndex, prefersReducedMotion, nameDone, fullName.length]);
+  
+//new version of typing name
+useEffect(() => {
+  if (prefersReducedMotion) return;
+  if (nameIndex >= fullName.length) return;
+
+  const typingSpeed = 90;
+
+  const timeoutId = window.setTimeout(() => {
+    setNameIndex((value) => value + 1);
+  }, typingSpeed);
+
+  return () => window.clearTimeout(timeoutId);
+}, [nameIndex, prefersReducedMotion, fullName.length]);
+
+
+// Type description once, starting after name finishes
+  // useEffect(() => {
+  //   if (prefersReducedMotion || !nameDone) return;
+
+  //   const typingSpeed = 90;
+  //   const fullDescription = profile.summary;
+  //   let timeoutId: number;
+
+  //   if (descriptionIndex < fullDescription.length) {
+  //     timeoutId = window.setTimeout(
+  //       () => setDescriptionIndex((value) => value + 1),
+  //       typingSpeed,
+  //     );
+  //   }
+
+  //   return () => window.clearTimeout(timeoutId);
+  // }, [descriptionIndex, prefersReducedMotion, nameDone]);
+
   useEffect(() => {
-    if (prefersReducedMotion || nameDone) return;
+  if (!nameDone) return;
 
-    const typingSpeed = 90;
-    let timeoutId: number;
+  const typingSpeed = 90;
+  const fullDescription = profile.summary;
 
-    if (nameIndex < fullName.length) {
-      timeoutId = window.setTimeout(
-        () => setNameIndex((value) => value + 1),
-        typingSpeed,
-      );
-    } else {
-      setNameDone(true);
-    }
+  if (descriptionIndex >= fullDescription.length) return;
 
-    return () => window.clearTimeout(timeoutId);
-  }, [nameIndex, prefersReducedMotion, nameDone, fullName]);
+  const timeoutId = window.setTimeout(() => {
+    setDescriptionIndex((value) => value + 1);
+  }, typingSpeed);
 
-  // Type description once, starting after name finishes
-  useEffect(() => {
-    if (prefersReducedMotion || !nameDone) return;
-
-    const typingSpeed = 90;
-    const fullDescription = profile.summary;
-    let timeoutId: number;
-
-    if (descriptionIndex < fullDescription.length) {
-      timeoutId = window.setTimeout(
-        () => setDescriptionIndex((value) => value + 1),
-        typingSpeed,
-      );
-    }
-
-    return () => window.clearTimeout(timeoutId);
-  }, [descriptionIndex, prefersReducedMotion, nameDone]);
+  return () => window.clearTimeout(timeoutId);
+}, [descriptionIndex, nameDone, profile.summary]);
 
   // Continuously cycle through roles, starting after name finishes
+
+
+  // useEffect(() => {
+  //   if (prefersReducedMotion || !nameDone) return;
+
+  //   const typingSpeed = 90;
+  //   const pauseBetweenRoles = 2200;
+  //   let timeoutId: number;
+
+  //   const currentRole = roles[roleIdx];
+
+  //   if (roleIndex < currentRole.length) {
+  //     timeoutId = window.setTimeout(
+  //       () => setRoleIndex((value) => value + 1),
+  //       typingSpeed,
+  //     );
+  //   } else {
+  //     timeoutId = window.setTimeout(() => {
+  //       setRoleIndex(0);
+  //       setRoleIdx((idx) => (idx + 1) % roles.length);
+  //     }, pauseBetweenRoles);
+  //   }
+
+  //   return () => window.clearTimeout(timeoutId);
+  // }, [roleIndex, roleIdx, prefersReducedMotion, nameDone, roles]);
+
   useEffect(() => {
-    if (prefersReducedMotion || !nameDone) return;
+  if (!nameDone) return;
 
-    const typingSpeed = 90;
-    const pauseBetweenRoles = 2200;
-    let timeoutId: number;
+  const typingSpeed = 90;
+  const pauseBetweenRoles = 2200;
 
-    const currentRole = roles[roleIdx];
+  const currentRole = roles[roleIdx];
+  let timeoutId: number;
 
-    if (roleIndex < currentRole.length) {
-      timeoutId = window.setTimeout(
-        () => setRoleIndex((value) => value + 1),
-        typingSpeed,
-      );
-    } else {
-      timeoutId = window.setTimeout(() => {
-        setRoleIndex(0);
-        setRoleIdx((idx) => (idx + 1) % roles.length);
-      }, pauseBetweenRoles);
-    }
+  if (roleIndex < currentRole.length) {
+    timeoutId = window.setTimeout(() => {
+      setRoleIndex((value) => value + 1);
+    }, typingSpeed);
+  } else {
+    timeoutId = window.setTimeout(() => {
+      setRoleIndex(0);
+      setRoleIdx((idx) => (idx + 1) % roles.length);
+    }, pauseBetweenRoles);
+  }
 
-    return () => window.clearTimeout(timeoutId);
-  }, [roleIndex, roleIdx, prefersReducedMotion, nameDone, roles]);
+  return () => window.clearTimeout(timeoutId);
+}, [roleIndex, roleIdx, nameDone, roles]);
 
   return (
     <motion.section
@@ -506,7 +561,7 @@ function Hero() {
 
 
 
-export function About() {
+function About() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -602,14 +657,14 @@ export function About() {
             </motion.p>
 
             <motion.p variants={itemVariants}>
-              I've worked on production-grade distributed systems: event-driven
+              I have worked on production-grade distributed systems: event-driven
               microservices, low-latency pipelines, and infrastructure spanning
               large-scale node networks.
             </motion.p>
 
             <motion.p variants={itemVariants}>
               My roots are in Development infrastructure — high-stakes, always-on
-              environments where fault tolerance isn’t optional.
+              environments where fault tolerance is not optional.
             </motion.p>
           </div>
 
@@ -666,71 +721,152 @@ export function About() {
 
 
 
-
-
-export function SkillsSection() {
-  const row1 = ["SpringBoot", "TypeScript", "Python", "Javascript", "C", "Flutter", "ReactNative", "React"];
-  const row2 = ["Git", "Load Balancers", "Linux", "Microservices"];
-  const row3 = ["gRPC", "WebSockets", "PostgreSQL", "Redis", "Docker", "AWS"];
-
-  const MarqueeRow = ({
-    items,
-    direction = 1,
-  }: {
-    items: string[];
-    direction?: number;
-  }) => {
-    return (
-      <div className="relative mb-6 w-full overflow-hidden py-2">
-        <motion.div
-          className="flex whitespace-nowrap"
-          animate={{ x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-          transition={{ ease: "linear", duration: 25, repeat: Infinity }}
-        >
-          {[...items, ...items, ...items].map((skill, idx) => {
-  const magnetic = useMagnetic(25);
-
+function SkillPill({ label }: { label: string }) {
   return (
-    <div
-      key={idx}
-      ref={magnetic.ref}
-      onMouseMove={magnetic.onMouseMove}
-      onMouseLeave={magnetic.onMouseLeave}
-      className="group relative mx-4 shrink-0 cursor-default rounded-full border border-slate-800/70 bg-[linear-gradient(145deg,rgba(15,23,42,0.7),rgba(2,6,23,0.6))] px-6 py-4 text-2xl font-bold text-slate-400 backdrop-blur-xl transition-all duration-300 md:text-4xl will-change-transform"
+    <motion.div
+      whileHover={{
+        scale: 1.04,
+        y: -3,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 220,
+        damping: 20,
+      }}
+      className="
+        group relative shrink-0 cursor-default
+        rounded-2xl overflow-hidden
+        px-6 py-3
+        border border-slate-700/60
+        bg-[linear-gradient(145deg,rgba(15,23,42,0.75),rgba(2,6,23,0.65))]
+        text-slate-300 text-sm md:text-lg font-semibold
+        backdrop-blur-xl
+        transition-all duration-300
+      "
     >
       {/* TEXT */}
-      <span className="relative z-10 transition-all duration-300 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_18px_rgba(16,185,129,0.6)]">
-        {skill}
+      <span
+        className="
+          relative z-10 transition-all duration-300
+          group-hover:text-emerald-200
+          group-hover:drop-shadow-[0_0_12px_rgba(16,185,129,0.35)]
+        "
+      >
+        {label}
       </span>
 
-      {/* HOVER GLOW */}
-      <div className="pointer-events-none absolute inset-0 rounded-full bg-emerald-500/10 opacity-0 blur-xl transition duration-300 group-hover:opacity-100" />
+      {/* GLASS SHINE SWEEP */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="
+            absolute -left-full top-0 h-full w-1/2
+            bg-gradient-to-r from-transparent via-white/15 to-transparent
+            opacity-0 transition-all duration-700
+            group-hover:left-full group-hover:opacity-100
+          "
+        />
+      </div>
+
+      {/* BRIGHTENED EMERALD GLOW */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 rounded-2xl
+          opacity-0 blur-xl transition duration-300
+          bg-emerald-400/15
+          group-hover:opacity-100
+        "
+      />
+
+      {/* INNER LIGHT (sharp highlight layer) */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 rounded-2xl
+          opacity-0 transition duration-300
+          bg-emerald-300/5
+          group-hover:opacity-100
+        "
+      />
 
       {/* EDGE LIGHT */}
-      <div className="pointer-events-none absolute inset-0 rounded-full border border-emerald-400/0 transition duration-300 group-hover:border-emerald-400/40" />
+      <div
+        className="
+          pointer-events-none absolute inset-0 rounded-2xl border
+          border-emerald-400/0
+          transition duration-300
+          group-hover:border-emerald-400/35
+        "
+      />
+    </motion.div>
+  );
+}
 
-      {/* SHIMMER */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
-        <div className="absolute -left-full top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-all duration-700 group-hover:left-full group-hover:opacity-100" />
-      </div>
+function MarqueeRow({
+  items,
+  direction = 1,
+}: {
+  items: string[];
+  direction?: number;
+}) {
+  return (
+    <div className="w-full overflow-hidden whitespace-nowrap">
+      <motion.div
+        className="flex gap-5" // tighter spacing = cleaner
+        animate={{
+          x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"],
+        }}
+        transition={{
+          ease: "linear",
+          duration: 16, // faster but smooth
+          repeat: Infinity,
+        }}
+      >
+        {[...items, ...items, ...items, ...items, ...items].map(
+          (skill, idx) => (
+            <SkillPill key={idx} label={skill} />
+          )
+        )}
+      </motion.div>
     </div>
   );
-})}
-        </motion.div>
-      </div>
-    );
-  };
+}
+
+
+function SkillsSection() {
+  const containerRef = useRef(null);
+
+  // scroll-based speed variation (subtle)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const speed = useTransform(scrollYProgress, [0, 1], [1, 1.4]);
+
+  const row1 = [
+    "SpringBoot", "TypeScript", "Python", "JavaScript",
+    "React", "React Native", "Flutter", "C"
+  ];
+
+  const row2 = [
+    "Linux", "Microservices", "Load Balancers", "Git"
+  ];
+
+  const row3 = [
+    "gRPC", "WebSockets", "PostgreSQL", "Redis", "Docker", "AWS"
+  ];
 
   return (
     <section
+      ref={containerRef}
       id="skills"
-      className="relative overflow-hidden py-24 bg-slate-950"
+      className="relative overflow-hidden py-28 bg-slate-950"
     >
-      {/* TOP FADE */}
-      <div className="pointer-events-none absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-950 to-transparent z-10" />
+      {/* EDGE FADE MASK (cleaner than div overlays) */}
+      <div className="pointer-events-none absolute inset-0 z-10 
+        [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]" />
 
       {/* HEADER */}
-      <div className="relative z-20 mb-16 px-6 text-center">
+      <div className="relative z-20 mb-20 px-6 text-center">
         <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-400 mb-4">
           04. Capabilities
         </h2>
@@ -740,155 +876,15 @@ export function SkillsSection() {
       </div>
 
       {/* MARQUEE */}
-      <div className="relative z-10 flex flex-col items-center rotate-[-2deg] w-[110%] -ml-[5%]">
-        <MarqueeRow items={row1} direction={1} />
-        <MarqueeRow items={row2} direction={-1} />
-        <MarqueeRow items={row3} direction={1} />
+      <div className="relative z-0 flex flex-col gap-8 rotate-[-2deg] w-[110%] -ml-[5%]">
+        <MarqueeRow items={row1} direction={1}  />
+        <MarqueeRow items={row2} direction={-1}  />
+        <MarqueeRow items={row3} direction={1}  />
       </div>
-
-      {/* BOTTOM GLOW */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-emerald-500/10 to-transparent opacity-30 z-10" />
     </section>
   );
 }
 
-
-
-import { Sparkles } from "lucide-react";
-import React from "react";
-
-// Custom hook for magnetic effect on hover
-const useMagnetic = (strength: number = 25) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-
-    const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const distance = Math.sqrt(
-      Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
-    );
-
-    if (distance < 100) {
-      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-      setOffset({
-        x: Math.cos(angle) * strength,
-        y: Math.sin(angle) * strength,
-      });
-    }
-  };
-
-  const onMouseLeave = () => {
-    setOffset({ x: 0, y: 0 });
-  };
-
-  return { ref, onMouseMove, onMouseLeave, offset };
-};
-
-const MarqueeRow = ({
-  items,
-  direction = 1,
-}: {
-  items: { name: string; isPrimary: boolean }[];
-  direction?: number;
-}) => {
-  return (
-    <div className="relative mb-8 w-full overflow-hidden py-3">
-      <motion.div
-        className="flex whitespace-nowrap gap-6"
-        animate={{ x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-        transition={{ ease: "linear", duration: 35, repeat: Infinity }}
-      >
-        {[...items, ...items, ...items].map((skill, idx) => {
-          const magnetic = useMagnetic(25);
-          const isPrimary = skill.isPrimary;
-
-          return (
-            <motion.div
-              key={idx}
-              ref={magnetic.ref}
-              onMouseMove={magnetic.onMouseMove}
-              onMouseLeave={magnetic.onMouseLeave}
-              animate={{
-                x: magnetic.offset.x,
-                y: magnetic.offset.y,
-              }}
-              transition={{ type: "spring", stiffness: 150, damping: 15 }}
-              className={`group relative shrink-0 cursor-default rounded-2xl backdrop-blur-xl transition-all duration-300 will-change-transform ${
-                isPrimary
-                  ? "border border-emerald-500/50 bg-[linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.08))] px-8 py-4 md:px-10 md:py-5"
-                  : "border border-slate-700/60 bg-[linear-gradient(145deg,rgba(15,23,42,0.8),rgba(2,6,23,0.7))] px-6 py-3 md:px-8 md:py-4"
-              }`}
-            >
-              {/* PRIMARY INDICATOR */}
-              {isPrimary && (
-                <div className="absolute -top-2 -right-2 z-20">
-                  <motion.div
-                    className="flex items-center gap-1 rounded-full bg-emerald-500/90 px-2 py-1"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", delay: idx * 0.02 }}
-                  >
-                    <Sparkles size={10} className="text-white" />
-                    <span className="text-[9px] font-bold uppercase text-white tracking-wider">
-                      Primary
-                    </span>
-                  </motion.div>
-                </div>
-              )}
-
-              {/* TEXT */}
-              <span
-                className={`relative z-10 font-bold transition-all duration-300 ${
-                  isPrimary
-                    ? "text-lg md:text-xl text-emerald-100 group-hover:text-emerald-200"
-                    : "text-sm md:text-lg text-slate-300 group-hover:text-slate-100"
-                } group-hover:drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]`}
-              >
-                {skill.name}
-              </span>
-
-              {/* HOVER GLOW - More intense for primary */}
-              <div
-                className={`pointer-events-none absolute inset-0 rounded-2xl opacity-0 blur-2xl transition duration-300 group-hover:opacity-100 ${
-                  isPrimary
-                    ? "bg-emerald-500/25"
-                    : "bg-emerald-500/10"
-                }`}
-              />
-
-              {/* EDGE LIGHT */}
-              <div
-                className={`pointer-events-none absolute inset-0 rounded-2xl border transition duration-300 ${
-                  isPrimary
-                    ? "border-emerald-400/0 group-hover:border-emerald-300/60"
-                    : "border-emerald-400/0 group-hover:border-emerald-400/40"
-                }`}
-              />
-
-              {/* SHIMMER EFFECT */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-                <div className="absolute -left-full top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 transition-all duration-700 group-hover:left-full group-hover:opacity-100" />
-              </div>
-
-              {/* PARTICLE EFFECT FOR PRIMARY */}
-              {isPrimary && (
-                <div className="pointer-events-none absolute inset-0 rounded-2xl">
-                  <div className="absolute top-1 right-2 h-1 w-1 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 blur-sm" />
-                  <div className="absolute bottom-2 left-3 h-1.5 w-1.5 rounded-full bg-emerald-300 opacity-0 group-hover:opacity-75 blur-sm" />
-                </div>
-              )}
-            </motion.div>
-          );
-        })}
-      </motion.div>
-    </div>
-  );
-};
 
 
 const timelineItemVariants = {
@@ -1155,7 +1151,7 @@ const yMove = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
 
 
-export function ProjectsSection() {
+function ProjectsSection() {
   const [expanded, setExpanded] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
  
