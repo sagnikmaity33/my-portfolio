@@ -87,9 +87,9 @@ useEffect(() => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.4 }}
-      className="section-container relative flex min-h-[calc(100vh-4rem)] flex-col gap-10 pb-24 pt-12 md:flex-row md:items-center md:justify-between md:pt-16"
+      className="section-container relative flex min-h-[calc(100vh-4rem)] flex-col gap-6 sm:gap-10 pb-12 sm:pb-24 pt-8 sm:pt-16 md:flex-row md:items-center md:justify-between"
     >
-      <div className="max-w-xl space-y-6">
+      <div className="max-w-xl space-y-4 sm:space-y-6">
         <div className="flex items-center gap-3">
           <span className="badge-soft">
             {isAvailableForWork
@@ -185,9 +185,9 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="mt-4 flex w-full justify-center md:mt-0 md:w-auto">
+      <div className="mt-2 sm:mt-4 flex w-full justify-center md:mt-0 md:w-auto">
         <motion.div
-          className="lottie-card relative h-50 w-52 overflow-hidden rounded-[2rem] border border-emerald-400/60 shadow-[0_0_60px_rgba(16,185,129,0.45)] md:h-56 md:w-56"
+          className="lottie-card relative h-40 w-40 sm:h-50 sm:w-52 md:h-56 md:w-56 overflow-hidden rounded-[2rem] border border-emerald-400/60 shadow-[0_0_60px_rgba(16,185,129,0.45)]"
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >

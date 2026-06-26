@@ -260,13 +260,13 @@ export default function ContactSection() {
   return (
     <motion.section
       id="contact"
-      className="section-container pb-20 scroll-mt-24 md:scroll-mt-28"
+      className="section-container pb-12 sm:pb-20 scroll-mt-24 md:scroll-mt-28"
       variants={sectionVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ amount: 0.2 }}
     >
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="mb-4 sm:mb-6 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="h-8 w-1 rounded-full bg-emerald-500/80" />
           <div>

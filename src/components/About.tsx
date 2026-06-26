@@ -26,14 +26,14 @@ export default function About() {
   return (
     <section
       id="about"
-      className="section-container relative py-20 md:py-28 scroll-mt-24 md:scroll-mt-28"
+      className="section-container relative py-12 sm:py-28 scroll-mt-24 md:scroll-mt-28"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute right-[-10%] top-0 h-[400px] w-[400px] rounded-full bg-emerald-500/10 blur-[120px]" />
       </div>
 
       <motion.div
-        className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10"
+        className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-12 lg:gap-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -81,8 +81,8 @@ export default function About() {
 
         <div className="hidden lg:block lg:col-span-1" />
 
-        <div className="lg:col-span-6 space-y-12">
-          <div className="space-y-6 text-base leading-relaxed text-slate-300 sm:text-lg">
+        <div className="lg:col-span-6 space-y-8 sm:space-y-12">
+          <div className="space-y-4 sm:space-y-6 text-base leading-relaxed text-slate-300 sm:text-lg">
             <motion.p variants={itemVariants}>
               I specialize in building robust backend systems that excel under
               pressure—leveraging SpringBoot, Node.js, and scalable distributed

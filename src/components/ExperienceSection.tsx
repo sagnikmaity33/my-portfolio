@@ -24,7 +24,7 @@ const yMove = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   return (
     <motion.section
       id="experience"
-      className="section-container relative pb-24 pt-6 scroll-mt-24 md:scroll-mt-28"
+      className="section-container relative pb-16 sm:pb-24 pt-4 sm:pt-6 scroll-mt-24 md:scroll-mt-28"
       variants={sectionVariants}
       initial="hidden"
       whileInView="visible"
@@ -32,22 +32,15 @@ const yMove = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
     >
       <div className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-64 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.10),transparent_70%)] blur-3xl" />
 
-      <div className="mb-12 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <span className="h-12 w-1 rounded-full bg-emerald-500/80 shadow-[0_0_20px_rgba(16,185,129,0.5)]" />
-          <div>
-            <h2 className="flex items-center gap-2 text-2xl font-semibold text-slate-50 sm:text-3xl">
-              <BriefcaseBusiness
-                size={22}
-                className="text-emerald-300"
-                aria-hidden="true"
-              />
-              Experience
-            </h2>
-            <p className="mt-1 text-sm text-slate-400 sm:text-base">
-              Roles where I&apos;ve built production systems at scale
-            </p>
-          </div>
+      <div className="mb-8 sm:mb-12 px-6 text-center">
+        <div className="inline-flex flex-col items-center">
+          <h2 className="text-3xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-slate-100 to-emerald-400">
+            Experience
+          </h2>
+          <div className="mt-3 h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
+          <p className="mt-3 text-sm text-emerald-400/80 sm:text-base">
+            Roles where I&apos;ve built production systems at scale
+          </p>
         </div>
       </div>
 

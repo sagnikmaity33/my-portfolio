@@ -134,16 +134,16 @@ export default function SkillsSection() {
     <section
       ref={containerRef}
       id="skills"
-      className="relative overflow-hidden py-28 bg-slate-950"
+      className="relative overflow-hidden py-16 sm:py-28 bg-slate-950"
     >
       <div className="pointer-events-none absolute inset-0 z-10 
         [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]" />
 
       <div className="relative z-20 mb-20 px-6 text-center">
-        <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-400 mb-4">
+        <h2 className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.4em] text-emerald-400 mb-3 sm:mb-4">
           04. Capabilities
         </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-slate-100">
+        <h3 className="text-3xl sm:text-5xl font-bold text-slate-100">
           Technical Arsenal
         </h3>
       </div>

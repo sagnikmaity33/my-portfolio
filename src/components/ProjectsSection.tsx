@@ -51,7 +51,7 @@ export default function ProjectsSection() {
   return (
     <motion.section
       id="projects"
-      className="section-container relative pb-32 scroll-mt-24 md:scroll-mt-28 overflow-hidden"
+      className="section-container relative pb-20 sm:pb-32 scroll-mt-24 md:scroll-mt-28 overflow-hidden"
       variants={{
         hidden: { opacity: 0 },
         visible: {
@@ -67,47 +67,37 @@ export default function ProjectsSection() {
       <div className="pointer-events-none absolute -right-32 top-32 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.08),transparent_70%)] blur-3xl" />
  
       <motion.div
-        className="mb-16 flex flex-col gap-2"
+        className="mb-10 sm:mb-16 px-6 text-center"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center gap-4">
-          <motion.span
-            className="h-12 w-1 rounded-full bg-emerald-500/80 shadow-[0_0_20px_rgba(16,185,129,0.5)]"
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+        <div className="inline-flex flex-col items-center">
+          <h2 className="text-3xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-slate-100 to-emerald-400">
+            Projects
+          </h2>
+          <motion.div
+            className="mt-3 h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
             viewport={{ once: false }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           />
-          <div>
-            <h2 className="flex items-center gap-3 text-3xl sm:text-4xl font-bold text-slate-50">
-              <motion.div
-                initial={{ rotate: -20 }}
-                whileInView={{ rotate: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: false }}
-              >
-                <FolderCode size={32} className="text-emerald-400" />
-              </motion.div>
-              Projects
-            </h2>
-            <motion.p
-              className="mt-2 text-sm text-slate-400 sm:text-base"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              viewport={{ once: false }}
-            >
-              Crafted solutions across Web, backend systems, and mobile experiences
-              {additionalProjects.length > 0 && (
-                <span className="ml-1 text-emerald-400">
-                  ({projects.length} total)
-                </span>
-              )}
-            </motion.p>
-          </div>
+          <motion.p
+            className="mt-3 text-sm text-emerald-400/80 sm:text-base"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: false }}
+          >
+            Crafted solutions across Web, backend systems, and mobile experiences
+            {additionalProjects.length > 0 && (
+              <span className="ml-1 text-emerald-400">
+                ({projects.length} total)
+              </span>
+            )}
+          </motion.p>
         </div>
       </motion.div>
  
@@ -145,7 +135,7 @@ export default function ProjectsSection() {
  
               {project.preview ? (
                 <motion.div
-                  className="relative h-56 w-full overflow-hidden rounded-t-3xl bg-gradient-to-br from-slate-700/40 to-slate-900/60"
+                  className="relative h-36 sm:h-56 w-full overflow-hidden rounded-t-3xl bg-gradient-to-br from-slate-700/40 to-slate-900/60"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
                 >
@@ -157,7 +147,7 @@ export default function ProjectsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                 </motion.div>
               ) : (
-                <div className="relative h-32 w-full rounded-t-3xl bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-slate-900/60 overflow-hidden">
+                <div className="relative h-24 sm:h-32 w-full rounded-t-3xl bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-slate-900/60 overflow-hidden">
                   <div className="absolute inset-0 opacity-50">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(16,185,129,0.2),transparent_50%)]" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(6,182,212,0.15),transparent_50%)]" />
@@ -170,7 +160,7 @@ export default function ProjectsSection() {
                 </div>
               )}
  
-              <div className="relative flex flex-col gap-4 p-6 sm:p-7">
+              <div className="relative flex flex-col gap-3 sm:gap-4 p-5 sm:p-7">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
@@ -185,7 +175,7 @@ export default function ProjectsSection() {
                     </div>
 
                     <motion.h3
-                      className="text-xl sm:text-2xl font-bold text-slate-50 group-hover:text-emerald-300 transition duration-300 line-clamp-2"
+                      className="text-base sm:text-2xl font-bold text-slate-50 group-hover:text-emerald-300 transition duration-300 line-clamp-2"
                       initial={{ opacity: 0.8 }}
                       whileHover={{ opacity: 1, letterSpacing: "0.02em" }}
                     >
@@ -296,7 +286,7 @@ export default function ProjectsSection() {
         >
           <motion.button
             onClick={() => setExpanded(!expanded)}
-            className="group relative inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-8 py-3.5 font-semibold text-emerald-300 backdrop-blur-md transition duration-300 hover:border-emerald-400/60 hover:bg-emerald-500/20 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+            className="group relative inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-6 sm:px-8 py-3 sm:py-3.5 font-semibold text-sm sm:text-base text-emerald-300 backdrop-blur-md transition duration-300 hover:border-emerald-400/60 hover:bg-emerald-500/20 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
