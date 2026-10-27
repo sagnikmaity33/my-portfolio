@@ -11,7 +11,7 @@ export const profile = {
   location: "Kolkata, West Bengal",
   email: "sagnikmaity.dev@gmail.com",
   referralEmail: "sagnikmaity.dev@gmail.com",
-  resumePublicPath: "/sagnik-resume_oct.pdf",
+  resumePublicPath: "/AI+java-sagnik.pdf",
   referralSubjectTemplate: "Referral Request: {Name} | Job IDs: {JobIds}",
   referralBodyTemplate: `Hi {Name},
 
@@ -161,6 +161,57 @@ export const experiences = [
 
 export const projects = [
   {
+  "name": "PayFlow",
+  "period": "2025",
+  "description": "Distributed payment orchestration platform implementing a resilient microservices-based transaction workflow for real-world financial processing.",
+  "bullets": [
+    "Architected and implemented a multi-service payment pipeline with API Gateway, Orchestrator, Wallet, Fraud, Ledger, and Notification services using Java 21 and Spring Boot 3.",
+    "Built an event-driven architecture with Kafka for asynchronous processing, PostgreSQL for transactional persistence, and Redis for idempotency and fast state checks.",
+    "Implemented core reliability mechanisms including Outbox pattern, optimistic locking, deduplication, retries, timeouts, and circuit breakers via Resilience4j.",
+    "Modeled distributed transaction orchestration with saga-style coordination, integrating fraud checks and wallet updates while preserving system consistency under failure scenarios.",
+    "Added observability features using Micrometer, Prometheus, Zipkin, and actuator endpoints for metrics, tracing, and health monitoring.",
+    "Containerized the platform with Docker Compose and structured the project as a Maven multi-module system for modular service development and deployment."
+  ],
+  "tags": ["Java", "Spring Boot", "Microservices", "Kafka", "Redis", "PostgreSQL", "Resilience4j", "Distributed Systems", "System Design"],
+  "codeUrl": "https://github.com/sagnikmaity33/Payflow",
+  "preview": "/Payflow-image.png",
+  "type": "Backend",
+  "demoUrl": "#"
+  },
+
+  {
+  "name": "Livyfy",
+  "period": "2025",
+  "description": "AI-powered campus housing marketplace that connects renters and owners through smart listing discovery, semantic search, and modular backend architecture for scalable property matching.",
+  "summary": "Livyfy is a smart housing platform designed for campus communities, helping students and renters discover suitable accommodations faster through intelligent search and AI-powered ranking. The project combines a Spring Boot backend, PostgreSQL database, and a FastAPI + ChromaDB AI service to build a hybrid search ecosystem where property listings are stored, filtered, semantically understood, and ranked for relevance. The system follows a multi-stage AI orchestration model—not a full autonomous agent swarm, but an agent-like workflow in which the database layer filters listings, the AI layer embeds and ranks them, and the application layer delivers the final best-fit results. This makes the platform more than a basic listing app; it becomes an AI-assisted decision engine for housing discovery.",
+  "workingPrinciple": "Livyfy works through a modular, feature-based architecture where each domain is isolated into dedicated layers: listing management, search, and AI integration. A listing is created through the backend, persisted in PostgreSQL, and also sent to the AI service to generate embeddings for semantic search. During search, the system applies DB filters such as price, location, and verification status, shortlists relevant listings, and then passes them to the AI ranking service for semantic similarity scoring. This hybrid workflow—DB filtering + AI ranking—ensures both precision and contextual relevance. The platform is built with 3 core services in Docker: the Spring Boot backend, PostgreSQL database, and FastAPI AI service, and supports 2 primary user roles: renters and owners. The project includes 4 core listing endpoints and 2 AI endpoints, enabling efficient listing CRUD operations and real-time semantic querying.",
+  "bullets": [
+    "Built an AI-powered campus housing marketplace connecting 2 primary user groups: renters and owners.",
+    "Developed a hybrid search system combining structured database filtering with semantic AI-based ranking for better listing relevance.",
+    "Designed a modular backend architecture with feature-based organization and 3 core Docker services: backend, database, and AI service.",
+    "Implemented listing CRUD operations with 4 core listing endpoints and AI integration through 2 dedicated AI endpoints.",
+    "Integrated FastAPI + ChromaDB + SentenceTransformers to store embeddings and perform semantic matching for property discovery.",
+    "Created a multi-stage AI orchestration pipeline where filtering, embedding, and ranking occur in sequence to improve search quality and user experience.",
+    "Built the platform with scalability in mind using a service-oriented setup intended for future booking, authentication, and monetization features.",
+    "Positioned the project as a strong MVP for a marketplace SaaS product, with clear next steps in JWT auth, booking flow, pagination, and geospatial search."
+  ],
+  "tags": [
+    "Java",
+    "Spring Boot",
+    "PostgreSQL",
+    "FastAPI",
+    "ChromaDB",
+    "Semantic Ranking",
+    "Hybrid Search",
+    "Docker",
+  ],
+  "codeUrl": "https://github.com/sagnikmaity33/Livyfy",
+  "featured": "#",
+  "preview": "/Livify-image.png",
+  "demoUrl": "#"
+},
+  
+  {
     name: "Enterprise API Rate Limiter",
     period: "2026",
     description: "Industrial-grade traffic control system designed for high-availability environments.",
@@ -171,7 +222,7 @@ export const projects = [
     ],
     tags: ["Java", "Spring Boot", "Redis", "Resilience4j", "System Design"],
     codeUrl: "https://github.com/sagnikmaity33/api-rate-limiter",
-    preview:"#",
+    preview:"/api-rate-limiter.png",
     type:"Backend",
     demoUrl:"#"
   },
@@ -186,7 +237,7 @@ export const projects = [
     ],
     tags: ["Java", "Spring Boot", "Redis", "Redisson", "Microservices"],
     codeUrl: "https://github.com/sagnikmaity33/IPAM",
-    preview:"#",
+    preview:"/IP-ADREESS-image.png",
     type:"Backend",
     demoUrl:"#"
   },
@@ -219,8 +270,7 @@ export const projects = [
   ],
   tags: ["Node.js", "Express.js", "Socket.IO", "MongoDB", "JWT", "Real-time", "REST API", "Bcrypt", "Google Maps API", "Geospatial", "CORS", "Validation"],
   codeUrl: "https://github.com/sagnikmaity33/UBER_CLONE",
-  featured: "#",
-    preview:"#",
+    preview:"/UBER-clone-image.png",
     demoUrl:"#"
 },
 {
